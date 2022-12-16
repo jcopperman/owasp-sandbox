@@ -1,0 +1,21 @@
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+
+- task: CmdLine@2
+  inputs:
+    script: 'docker run -u zap -p 8080:8080 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.key change-me-9203935709 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true'
+  displayName: Docker run Zap
+
+- task: OwaspZapScan@2
+  inputs:
+    ZapApiUrl: 'http://0.0.0.0:8090/'
+    ZapApiKey: 'change-me-9203935709'
+    TargetUrl: 'https://polymath-lilith.azurewebsites.net/'
+    ExecuteSpiderScan: false
+    ExecuteActiveScan: false
+    EnableVerifications: false
