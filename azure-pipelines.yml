@@ -29,7 +29,7 @@ steps:
 
 - task: OwaspZapScan@2
   inputs:
-    ZapApiUrl: 'http://0.0.0.0:8090/'
+    ZapApiUrl: 'http://localhost:8080'
     ZapApiKey: '12345-m12e-9203935709'
     TargetUrl: 'https://polymath-lilith.azurewebsites.net/'
     ExecuteSpiderScan: false
